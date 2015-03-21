@@ -7,7 +7,8 @@ package gameoflife;
 public class GameOfLife {
 
     public static void main(String[] args) {
-        // TODO code application logic here
+        GOLGrid testGrid = new GOLGrid();
+        ConsoleView.consoleDrawGrid(testGrid, "___", " X ");
     }
     
 }
