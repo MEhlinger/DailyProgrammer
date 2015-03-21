@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+// FizzBuzz in C
+//Marshall Ehlinger
+
 int main() {
 	const int MAX = 100;
 	int i;
@@ -20,7 +23,7 @@ int main() {
 		if (!(divisible)) {
 			printf("%d", i);
 		}
-		
+
 		printf("\n");
 
 	}

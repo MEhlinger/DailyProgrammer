@@ -65,6 +65,14 @@ target/
 ### Java ###
 *.class
 
+# Netbeans
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
@@ -135,3 +143,4 @@ nytprof.out
 *.o
 *.bs
 /_eumm/
+/GameOfLife/nbproject/private/
