@@ -49,8 +49,8 @@ public class GOLGrid {
         boolean neighbors[] = new boolean[8];
         int cellX, cellY;
         int count = 0;
-        for (int c = -1; c <= 1; c++) {
-            for (int r = -1; r <= 1; r++) {
+        for (int r = -1; r <= 1; r++) {
+            for (int c = -1; c <= 1; c++) {
                 if (c == 0 && r == 0) {
                     // Don't check the cell in question for its own state
                     continue;
@@ -58,18 +58,16 @@ public class GOLGrid {
                 cellX = x + c;
                 cellY = y + r;
                 // Wrapping logic, a la pacman
-                if (x < 0) {
-                    System.out.println("X<0");
+                if (cellX < 0) {
                     cellX += this.WIDTH;
                 }
-                else if (x > this.WIDTH) {
+                else if (cellX >= this.WIDTH) {
                     cellX -= this.WIDTH;
                 }
-                if (y < 0) {
-                    System.out.println("Y<0");
-                    cellY += this.WIDTH;
+                if (cellY < 0) {
+                    cellY += this.HEIGHT;
                 }
-                else if (y > this.HEIGHT) {
+                else if (cellY >= this.HEIGHT) {
                     cellY -= this.HEIGHT;
                 }
                 
@@ -101,8 +99,8 @@ public class GOLGrid {
         // For constructors only, at this point
         boolean[][] newGrid = new boolean[this.WIDTH][this.HEIGHT];
         Random rand = new Random();
-        for (int c = 0; c < this.WIDTH; c++) {
-            for (int r = 0; r < this.HEIGHT; r++) {
+        for (int r = 0; r < this.WIDTH; r++) {
+            for (int c = 0; c < this.HEIGHT; c++) {
                newGrid[c][r] = rand.nextBoolean();
             }
         }

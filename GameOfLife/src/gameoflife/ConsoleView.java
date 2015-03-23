@@ -9,8 +9,9 @@ package gameoflife;
 public class ConsoleView {
     
     public static void consoleDrawGrid(GOLGrid grid, String liveCell, String deadCell) {
-        for (int c = 0; c < grid.getWidth(); c++) {
-            for (int r = 0; r < grid.getHeight(); r++) {
+        clearConsole();
+        for (int r = 0; r < grid.getWidth(); r++) {
+            for (int c = 0; c < grid.getHeight(); c++) {
                 if (grid.isCellAlive(c, r)) {
                     System.out.print(liveCell);
                 } else {
@@ -20,4 +21,25 @@ public class ConsoleView {
             System.out.print("\n");
         }
     }
+    
+    public final static void clearConsole()
+{
+    try
+    {
+        final String os = System.getProperty("os.name");
+
+        if (os.contains("Windows"))
+        {
+            Runtime.getRuntime().exec("cls");
+        }
+        else
+        {
+            Runtime.getRuntime().exec("clear");
+        }
+    }
+    catch (final Exception e)
+    {
+        System.out.println("Weak-ass Exception handling: console clear failure.");
+    }
+}
 }
