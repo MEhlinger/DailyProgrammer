@@ -1,5 +1,6 @@
 package gameoflife;
 
+import static java.lang.System.arraycopy;
 import java.util.Random;
 
 /**
@@ -48,22 +49,24 @@ public class GOLGrid {
         boolean neighbors[] = new boolean[8];
         int cellX, cellY;
         int count = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i == 0 && j == -0) {
+        for (int c = -1; c <= 1; c++) {
+            for (int r = -1; r <= 1; r++) {
+                if (c == 0 && r == 0) {
                     // Don't check the cell in question for its own state
                     continue;
                 }
-                cellX = i;
-                cellY = j;
+                cellX = x + c;
+                cellY = y + r;
                 // Wrapping logic, a la pacman
                 if (x < 0) {
+                    System.out.println("X<0");
                     cellX += this.WIDTH;
                 }
                 else if (x > this.WIDTH) {
                     cellX -= this.WIDTH;
                 }
                 if (y < 0) {
+                    System.out.println("Y<0");
                     cellY += this.WIDTH;
                 }
                 else if (y > this.HEIGHT) {
@@ -110,11 +113,17 @@ public class GOLGrid {
         return this.HEIGHT;
     }
     
-    public int getWIDTH() {
+    public int getWidth() {
         return this.WIDTH;
     }
     
     public boolean[][] getGrid() {
         return this.grid;
+    }
+    
+    public void setGrid(boolean[][] newGrid) {
+        for (boolean[] column : this.grid) {
+            arraycopy(newGrid, 0, this.grid, 0, this.grid.length);
+        }
     }
 }
