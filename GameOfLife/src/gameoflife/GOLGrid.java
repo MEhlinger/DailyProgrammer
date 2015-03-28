@@ -107,6 +107,31 @@ public class GOLGrid {
         return newGrid;
     }
     
+    public void updateGame() {
+        int numNeighbors;
+        boolean[][] newGrid = new boolean[this.getWidth()][this.getHeight()];
+
+        for (int r = 0; r < this.getWidth(); r++) {
+                for (int c = 0; c < this.getHeight(); c++) {
+                    numNeighbors = this.countLiveNeighbors(c, r);
+                    if (this.isCellAlive(c, r)) {
+                        if (numNeighbors < 2 || numNeighbors > 3) {
+                            newGrid[c][r] = false; // Any live cell w/ less than 2 or more than 3 live neighbors dies
+                        } else {
+                            newGrid[c][r] = true; // Any live cell w/ 2 or 3 live neighbors lives on to the next generation
+                        }
+                    } 
+                    else if (numNeighbors == 3) {
+                         newGrid[c][r] = true; // Any dead cell w/ exactly 3 live neighbors revives
+                    }
+                }
+            }
+
+        // Copy new grid to the main grid
+        this.setGrid(newGrid);
+    }
+    
+    
     public int getHeight() {
         return this.HEIGHT;
     }
