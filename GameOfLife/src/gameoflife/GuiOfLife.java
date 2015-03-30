@@ -21,8 +21,8 @@ public class GuiOfLife extends Application {
     
     final int WIDTH = 35;
     final int HEIGHT = WIDTH;
-    final int WIN_WIDTH = 500;
-    final int WIN_HEIGHT = 500;
+    final int WIN_WIDTH = 950;
+    final int WIN_HEIGHT = WIN_WIDTH;
     
     @Override
     public void start(Stage primaryStage) {
@@ -31,7 +31,7 @@ public class GuiOfLife extends Application {
         GridPane gpane = new GridPane();
         gpane.setAlignment(Pos.CENTER);
         bpane.setCenter(gpane);
-        bpane.setStyle("-fx-background-color: #AFAA00");
+        bpane.setStyle("-fx-background-color: #000066");
         
         GOLGrid GOL = new GOLGrid(WIDTH, HEIGHT);
         
@@ -40,11 +40,19 @@ public class GuiOfLife extends Application {
         for (int col = 0; col < cellButtons.length; col++) {
             for (int row = 0; row < cellButtons[0].length; row++) {
                 cellButtons[col][row] = new Button("");
-                cellButtons[col][row].setMinWidth((WIN_WIDTH - (.2 * WIN_WIDTH))/ WIDTH);
-                cellButtons[col][row].setMinWidth((WIN_HEIGHT - (.2 * WIN_HEIGHT))/ HEIGHT);
                 cellButtons[col][row].setStyle("-fx-base: #0066F0");
+                cellButtons[col][row].setMinWidth((WIN_WIDTH / WIDTH));
+                cellButtons[col][row].setMaxHeight(cellButtons[col][row].getMinWidth());
                 
-                // Button logic lambda for activating cells on click will go here
+                cellButtons[col][row].setOnAction( e -> {
+                    Button thisButton = (Button) e.getSource();
+                    GOL.invertCellState(GridPane.getRowIndex(thisButton), GridPane.getColumnIndex(thisButton));
+                    if (GOL.isCellAlive(GridPane.getRowIndex(thisButton), GridPane.getColumnIndex(thisButton))) {
+                        thisButton.setStyle("-fx-base: #000000");
+                    } else {
+                        thisButton.setStyle("-fx-base: #0066F0");
+                    }
+                });
             }
         }
         

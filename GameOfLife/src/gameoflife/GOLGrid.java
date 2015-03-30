@@ -131,6 +131,10 @@ public class GOLGrid {
         this.setGrid(newGrid);
     }
     
+    public void invertCellState(int x, int y) {
+        grid[x][y] = !(grid[x][y]);
+    }
+    
     
     public int getHeight() {
         return this.HEIGHT;
