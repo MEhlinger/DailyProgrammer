@@ -27,12 +27,14 @@ public class GOLGrid {
         grid = getRandomGrid();
     }
     
-    public GOLGrid(int width, int height) {
+    public GOLGrid(int width, int height, boolean randomized) {
         // Contructor takes dimensions and inits randomly arranged grid 
         this.WIDTH = width;
         this.HEIGHT = height;
         this.grid = new boolean[WIDTH][HEIGHT];
-        this.grid = getRandomGrid();
+        if (randomized) {
+            this.grid = getRandomGrid();
+        }
     }
     
     public GOLGrid(boolean startArray[][]) {

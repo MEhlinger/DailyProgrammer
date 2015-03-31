@@ -24,6 +24,10 @@ public class GuiOfLife extends Application {
     final int WIN_WIDTH = 950;
     final int WIN_HEIGHT = WIN_WIDTH;
     
+    private boolean playing = false;
+    private GOLGrid GOL;
+
+    
     @Override
     public void start(Stage primaryStage) {
         
@@ -33,7 +37,7 @@ public class GuiOfLife extends Application {
         bpane.setCenter(gpane);
         bpane.setStyle("-fx-background-color: #000066");
         
-        GOLGrid GOL = new GOLGrid(WIDTH, HEIGHT);
+        GOL = new GOLGrid(WIDTH, HEIGHT, true);
         
         Button cellButtons[][] = new Button[WIDTH][HEIGHT];
         
@@ -58,6 +62,11 @@ public class GuiOfLife extends Application {
         
         for (int col = 0; col < cellButtons.length; col++) {
             for (int row = 0; row < cellButtons[0].length; row++) {
+                if (GOL.isCellAlive(col, row)) {
+                        cellButtons[col][row].setStyle("-fx-base: #000000");
+                    } else {
+                        cellButtons[col][row].setStyle("-fx-base: #0066F0");
+                    }
                 gpane.add(cellButtons[row][col], col, row);
             }
         }
@@ -77,7 +86,22 @@ public class GuiOfLife extends Application {
         
         Timeline gameAnimate = new Timeline(new KeyFrame(Duration.millis(200), updateGui));
         gameAnimate.setCycleCount(Timeline.INDEFINITE);
-        gameAnimate.play();
+        
+        
+        Button btnPlayPause = new Button("Play");
+        btnPlayPause.setOnAction( e -> {
+            this.playing = !playing;
+            if (playing) {
+                gameAnimate.play();
+                btnPlayPause.setText("Pause");
+            } else {
+                gameAnimate.pause();
+                btnPlayPause.setText("Play");
+            }
+        });
+        bpane.setBottom(btnPlayPause);
+        BorderPane.setAlignment(btnPlayPause, Pos.CENTER);
+        
         
         Scene scene = new Scene(bpane, WIN_WIDTH, WIN_HEIGHT);
         
