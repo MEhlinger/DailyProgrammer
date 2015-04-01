@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,12 +34,17 @@ public class GuiOfLife extends Application {
         
         BorderPane bpane = new BorderPane();
         GridPane gpane = new GridPane();
+        HBox buttonBar = new HBox();
+        
+        
         gpane.setAlignment(Pos.CENTER);
         bpane.setCenter(gpane);
+        bpane.setBottom(buttonBar);
         bpane.setStyle("-fx-background-color: #000066");
         
         GOL = new GOLGrid(WIDTH, HEIGHT, true);
         
+        // Create grid of buttons
         Button cellButtons[][] = new Button[WIDTH][HEIGHT];
         
         for (int col = 0; col < cellButtons.length; col++) {
@@ -60,6 +66,7 @@ public class GuiOfLife extends Application {
             }
         }
         
+        // Initialize button colors, add to visual pane
         for (int col = 0; col < cellButtons.length; col++) {
             for (int row = 0; row < cellButtons[0].length; row++) {
                 if (GOL.isCellAlive(col, row)) {
@@ -71,6 +78,7 @@ public class GuiOfLife extends Application {
             }
         }
         
+        // Animation / Game Logic Call
         EventHandler<ActionEvent> updateGui = e -> {
             GOL.updateGame();
             for (int col = 0; col < cellButtons.length; col++) {
@@ -87,7 +95,7 @@ public class GuiOfLife extends Application {
         Timeline gameAnimate = new Timeline(new KeyFrame(Duration.millis(200), updateGui));
         gameAnimate.setCycleCount(Timeline.INDEFINITE);
         
-        
+        // UI Buttons
         Button btnPlayPause = new Button("Play");
         btnPlayPause.setOnAction( e -> {
             this.playing = !playing;
@@ -99,10 +107,16 @@ public class GuiOfLife extends Application {
                 btnPlayPause.setText("Play");
             }
         });
-        bpane.setBottom(btnPlayPause);
-        BorderPane.setAlignment(btnPlayPause, Pos.CENTER);
+        buttonBar.getChildren().add(btnPlayPause);
         
         
+        Button btnClear = new Button("Clear");
+        btnClear.setOnAction( e -> {
+            GOL.clearGrid();
+        });
+        buttonBar.getChildren().add(btnClear);
+        
+        // GUI Final Set-Up
         Scene scene = new Scene(bpane, WIN_WIDTH, WIN_HEIGHT);
         
         primaryStage.setTitle("Conway's Game of Life");

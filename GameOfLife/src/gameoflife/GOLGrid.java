@@ -133,6 +133,11 @@ public class GOLGrid {
         this.setGrid(newGrid);
     }
     
+    public void clearGrid() {
+        boolean[][] empty = new boolean[WIDTH][HEIGHT];
+        this.setGrid(empty);
+    }
+    
     public void invertCellState(int x, int y) {
         grid[x][y] = !(grid[x][y]);
     }
