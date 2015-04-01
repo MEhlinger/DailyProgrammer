@@ -27,6 +27,8 @@ public class GuiOfLife extends Application {
     
     private boolean playing = false;
     private GOLGrid GOL;
+    
+    Button cellButtons[][];
 
     
     @Override
@@ -45,7 +47,7 @@ public class GuiOfLife extends Application {
         GOL = new GOLGrid(WIDTH, HEIGHT, true);
         
         // Create grid of buttons
-        Button cellButtons[][] = new Button[WIDTH][HEIGHT];
+        cellButtons= new Button[WIDTH][HEIGHT];
         
         for (int col = 0; col < cellButtons.length; col++) {
             for (int row = 0; row < cellButtons[0].length; row++) {
@@ -81,15 +83,7 @@ public class GuiOfLife extends Application {
         // Animation / Game Logic Call
         EventHandler<ActionEvent> updateGui = e -> {
             GOL.updateGame();
-            for (int col = 0; col < cellButtons.length; col++) {
-                for (int row = 0; row < cellButtons[0].length; row++) {
-                    if (GOL.isCellAlive(col, row)) {
-                        cellButtons[col][row].setStyle("-fx-base: #000000");
-                    } else {
-                        cellButtons[col][row].setStyle("-fx-base: #0066F0");
-                    }
-                }
-            }
+            updateCellColors();
         };
         
         Timeline gameAnimate = new Timeline(new KeyFrame(Duration.millis(200), updateGui));
@@ -113,8 +107,16 @@ public class GuiOfLife extends Application {
         Button btnClear = new Button("Clear");
         btnClear.setOnAction( e -> {
             GOL.clearGrid();
+            updateCellColors();
         });
         buttonBar.getChildren().add(btnClear);
+        
+        Button btnRandomize = new Button("Randomize");
+        btnRandomize.setOnAction( e -> {
+            GOL.setGrid(GOL.getRandomGrid());
+            updateCellColors();
+        });
+        buttonBar.getChildren().add(btnRandomize);
         
         // GUI Final Set-Up
         Scene scene = new Scene(bpane, WIN_WIDTH, WIN_HEIGHT);
@@ -122,7 +124,21 @@ public class GuiOfLife extends Application {
         primaryStage.setTitle("Conway's Game of Life");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
+        
+        
+}
+    
+    private void updateCellColors() {
+            for (int col = 0; col < cellButtons.length; col++) {
+                for (int row = 0; row < cellButtons[0].length; row++) {
+                    if (GOL.isCellAlive(col, row)) {
+                        cellButtons[col][row].setStyle("-fx-base: #000000");
+                    } else {
+                        cellButtons[col][row].setStyle("-fx-base: #0066F0");
+                    }
+                }
+            }
+        }
     
     /**
      * @param args the command line arguments

@@ -96,9 +96,8 @@ public class GOLGrid {
         return liveNeighbors;
     }
     
-    private boolean[][] getRandomGrid() {
+    public boolean[][] getRandomGrid() {
         // Returns 2d bool grid sized to current grid's dimensions
-        // For constructors only, at this point
         boolean[][] newGrid = new boolean[this.WIDTH][this.HEIGHT];
         Random rand = new Random();
         for (int r = 0; r < this.WIDTH; r++) {
