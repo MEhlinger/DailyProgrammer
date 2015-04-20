@@ -6,11 +6,13 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -20,10 +22,12 @@ import javafx.util.Duration;
  */
 public class GuiOfLife extends Application {
     
-    final int WIDTH = 35;
+    final int WIDTH = 30;
     final int HEIGHT = WIDTH;
-    final int WIN_WIDTH = 950;
-    final int WIN_HEIGHT = WIN_WIDTH;
+    
+    Rectangle2D res = Screen.getPrimary().getVisualBounds();
+    final double WIN_WIDTH =  res.getWidth() * .5;
+    final double WIN_HEIGHT = res.getHeight() * .8;
     
     private boolean playing = false;
     private GOLGrid GOL;
@@ -38,10 +42,11 @@ public class GuiOfLife extends Application {
         GridPane gpane = new GridPane();
         HBox buttonBar = new HBox();
         
+        bpane.setMaxSize(WIN_WIDTH, WIN_HEIGHT);
         
         gpane.setAlignment(Pos.CENTER);
         bpane.setCenter(gpane);
-        bpane.setBottom(buttonBar);
+        bpane.setLeft(buttonBar);
         bpane.setStyle("-fx-background-color: #000066");
         
         GOL = new GOLGrid(WIDTH, HEIGHT, true);
@@ -53,8 +58,9 @@ public class GuiOfLife extends Application {
             for (int row = 0; row < cellButtons[0].length; row++) {
                 cellButtons[col][row] = new Button("");
                 cellButtons[col][row].setStyle("-fx-base: #0066F0");
-                cellButtons[col][row].setMinWidth((WIN_WIDTH / WIDTH));
-                cellButtons[col][row].setMaxHeight(cellButtons[col][row].getMinWidth());
+                int cellSize = (int) (bpane.getWidth());
+                cellButtons[col][row].setMinWidth(cellSize);
+                cellButtons[col][row].setMaxHeight(cellSize);
                 
                 cellButtons[col][row].setOnAction( e -> {
                     Button thisButton = (Button) e.getSource();
