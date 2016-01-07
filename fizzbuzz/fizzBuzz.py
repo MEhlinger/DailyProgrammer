@@ -15,5 +15,5 @@ def fizzBuzz(max):
 ########
 # TEST #
 ########
-
-fizzBuzz(100)
+if __name__ == "__main__":
+	fizzBuzz(100)
